@@ -6,7 +6,6 @@
 */
 export function groupWordsByLength(words: string[]): Map<number, string[]> {
     const lengthMap = new Map<number, string[]>();
- 
     for (const word of words) {
         const length = word.length;
  
@@ -16,7 +15,9 @@ export function groupWordsByLength(words: string[]): Map<number, string[]> {
         }
  
         // Add the word to the appropriate array
-        lengthMap.get(length)!.push(word);
+        const wordList = lengthMap.get(length) ?? [];
+        wordList.push(word);
+        lengthMap.set(length, wordList);
     }
  
     return lengthMap;

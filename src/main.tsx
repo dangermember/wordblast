@@ -1,8 +1,8 @@
 // Learn more at developers.reddit.com/docs
-import { Devvit } from '@devvit/public-api';
+import { Devvit, useState } from '@devvit/public-api';
 import { GridComponent } from './GridComponent.js';
 import { IslandGridComponent } from './IslandGridComponent.js';
-import { generateGrid, analyzeGrid, generateLetterGrid } from './BlockGenerationUtils.js';
+import { generateGrid, analyzeGrid, generateLetterGrid, IslandData } from './BlockGenerationUtils.js';
 import { groupWordsByLength, selectWordsBySizes } from './WordGenerationUtils.js';
 
 Devvit.configure({
@@ -36,44 +36,35 @@ Devvit.addCustomPostType({
   name: 'Experience Post',
   height: 'regular',
   render: (_context) => {
+    const groupedWords = groupWordsByLength(["apple", "banana", "cherry", "date", "egg", "fig", "grape", "Desktop", "Toy", "Hen", "Paper", "Chair", "Bear", "Egg", "Cat", "Rat", "Chick"]);
 
     // Example usage: block generation
-    const grid = generateGrid(5);
-    console.log("Generated Grid:");
-    console.log(grid.map(row => row.join(' ')).join('\n'));
-
-    const islands = analyzeGrid(grid);
-    console.log("\nIsland Data:");
-    islands.forEach((island) => {
+    const [grid,setGrid]=useState(generateGrid(5));
+    //console.log("Generated Grid:");
+    //console.log(grid.map(row => row.join(' ')).join('\n'));
+    const [islands,setIslands]=useState(analyzeGrid(grid));
+    //console.log("\nIsland Data:");
+    /*islands.forEach((island) => {
       console.log(`Island ${island.index}: Size = ${island.size}, Vertices = ${JSON.stringify(island.vertices)}`);
-    });
+    });*/
 
-
-    // Example usage: word generation
-    const allPossibleWords = ["apple", "banana", "cherry", "date", "egg", "fig", "grape", "Desktop", "Toy", "Hen", "Paper", "Chair", "Bear", "Egg", "Cat", "Rat", "Chick"];
-    const groupedWords = groupWordsByLength(allPossibleWords);
 
     // Output the map
-    console.log("Grouped Words by Length:");
-    for (const [length, words] of groupedWords.entries()) {
+    //console.log("Grouped Words by Length:");
+    /*for (const [length, words] of groupedWords.entries()) {
       console.log(`Length ${length}: ${words}`);
-    }
+    }*/
 
-    const sizes = islands.map(i => i.size);
-    let selectedWords: string[] = [];
-    try {
-      selectedWords = selectWordsBySizes(groupedWords, sizes);
-      console.log("Selected Words:", selectedWords);
-    } catch (error: any) {
-      console.error(error.message);
-    }
+    const [sizes,setSizes] = useState(islands.map(i => i.size));
+    const [selectedWords,setSelectedWords] = useState(selectWordsBySizes(groupedWords, sizes));
 
-    const letterGrid = generateLetterGrid(grid, islands, selectedWords);
-    console.log("Generated Letter Grid:");
-    console.log(letterGrid.map(row => row.join(" ")).join("\n"));
+    const [letterGrid,setLetterGrid] = useState(generateLetterGrid(grid, islands, selectedWords));
 
-    console.log(JSON.stringify(letterGrid));
-    console.log(JSON.stringify(islands));
+    //console.log("Generated Letter Grid:");
+    //console.log(letterGrid.map(row => row.join(" ")).join("\n"));
+
+    //console.log(JSON.stringify(letterGrid));
+    //console.log(JSON.stringify(islands));
 
     return (
       <vstack alignment='center middle' height='100%' gap='large'>

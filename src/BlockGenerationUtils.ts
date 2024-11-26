@@ -1,8 +1,10 @@
+import { JSONArray } from "@devvit/public-api";
+
 export type Grid = number[][];
 export type LetterGrid = string[][];
 export type Vertex = number[];
 
-export interface IslandData {
+export interface IslandData extends JSONArray {
     index: number;
     size: number;
     vertices: Vertex[];
