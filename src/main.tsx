@@ -2,6 +2,8 @@
 import { Devvit } from '@devvit/public-api';
 import { GridComponent } from './GridComponent.js';
 import { IslandGridComponent } from './IslandGridComponent.js';
+import { generateGrid, analyzeGrid, generateLetterGrid } from './BlockGenerationUtils.js';
+import { groupWordsByLength, selectWordsBySizes } from './WordGenerationUtils.js';
 
 Devvit.configure({
   redditAPI: true,
@@ -34,8 +36,44 @@ Devvit.addCustomPostType({
   name: 'Experience Post',
   height: 'regular',
   render: (_context) => {
-    const letterGrid = [["D","E","S","K","T"],["A","P","P","L","O"],["R","A","F","E","P"],["D","T","I","G","E"],["A","T","E","G","G"]];
-    const islands = [{"index":0,"size":7,"vertices":[[0,0],[0,1],[0,2],[0,3],[0,4],[1,4],[2,4]]},{"index":1,"size":5,"vertices":[[1,0],[1,1],[1,2],[1,3],[2,3]]},{"index":2,"size":3,"vertices":[[2,0],[2,1],[3,1]]},{"index":3,"size":3,"vertices":[[2,2],[3,2],[3,3]]},{"index":4,"size":4,"vertices":[[3,0],[4,0],[4,1],[4,2]]},{"index":5,"size":3,"vertices":[[3,4],[4,4],[4,3]]}];
+
+    // Example usage: block generation
+    const grid = generateGrid(5);
+    console.log("Generated Grid:");
+    console.log(grid.map(row => row.join(' ')).join('\n'));
+
+    const islands = analyzeGrid(grid);
+    console.log("\nIsland Data:");
+    islands.forEach((island) => {
+      console.log(`Island ${island.index}: Size = ${island.size}, Vertices = ${JSON.stringify(island.vertices)}`);
+    });
+
+
+    // Example usage: word generation
+    const allPossibleWords = ["apple", "banana", "cherry", "date", "egg", "fig", "grape", "Desktop", "Toy", "Hen", "Paper", "Chair", "Bear", "Egg", "Cat", "Rat", "Chick"];
+    const groupedWords = groupWordsByLength(allPossibleWords);
+
+    // Output the map
+    console.log("Grouped Words by Length:");
+    for (const [length, words] of groupedWords.entries()) {
+      console.log(`Length ${length}: ${words}`);
+    }
+
+    const sizes = islands.map(i => i.size);
+    let selectedWords: string[] = [];
+    try {
+      selectedWords = selectWordsBySizes(groupedWords, sizes);
+      console.log("Selected Words:", selectedWords);
+    } catch (error: any) {
+      console.error(error.message);
+    }
+
+    const letterGrid = generateLetterGrid(grid, islands, selectedWords);
+    console.log("Generated Letter Grid:");
+    console.log(letterGrid.map(row => row.join(" ")).join("\n"));
+
+    console.log(JSON.stringify(letterGrid));
+    console.log(JSON.stringify(islands));
 
     return (
       <vstack alignment='center middle' height='100%' gap='large'>
