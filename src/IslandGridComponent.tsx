@@ -16,11 +16,17 @@ export const IslandGridComponent = ({ gridSize, islandVertices }: IslandGridProp
                     {Array.from({ length: gridSize }).map((_, colIndex) => {
                         const isIslandCell = islandMap.has(`${rowIndex},${colIndex}`);
                         return isIslandCell ? (
-                           <text color='gray'>
-                                {`▆`}
+                            <hstack backgroundColor="blue" padding="small">
+                           <text>
+                                {` `}
                             </text>
+                            </hstack>
                         ) : (
-                            <text>{' '}</text>
+                            <hstack padding="small" height={1}>
+                           <text>
+                                {` `}
+                            </text>
+                            </hstack>
                         );
                     })}
                 </hstack>
