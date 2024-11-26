@@ -30,7 +30,9 @@ Devvit.addMenuItem({
     ui.showToast({ text: 'Created post!' });
   },
 });
+const connectVerticies = ()=>{
 
+};
 // Add a post type definition
 Devvit.addCustomPostType({
   name: 'Experience Post',
@@ -39,14 +41,14 @@ Devvit.addCustomPostType({
     const groupedWords = groupWordsByLength(["apple", "banana", "cherry", "date", "egg", "fig", "grape", "Desktop", "Toy", "Hen", "Paper", "Chair", "Bear", "Egg", "Cat", "Rat", "Chick"]);
 
     // Example usage: block generation
-    const [grid,setGrid]=useState(generateGrid(5));
+    const [grid, setGrid] = useState(generateGrid(5));
     //console.log("Generated Grid:");
     //console.log(grid.map(row => row.join(' ')).join('\n'));
-    const [islands,setIslands]=useState(analyzeGrid(grid));
+    const [islands, setIslands] = useState(analyzeGrid(grid));
     //console.log("\nIsland Data:");
-    /*islands.forEach((island) => {
+    islands.forEach((island) => {
       console.log(`Island ${island.index}: Size = ${island.size}, Vertices = ${JSON.stringify(island.vertices)}`);
-    });*/
+    });
 
 
     // Output the map
@@ -55,10 +57,10 @@ Devvit.addCustomPostType({
       console.log(`Length ${length}: ${words}`);
     }*/
 
-    const [sizes,setSizes] = useState(islands.map(i => i.size));
-    const [selectedWords,setSelectedWords] = useState(selectWordsBySizes(groupedWords, sizes));
+    const [sizes, setSizes] = useState(islands.map(i => i.size));
+    const [selectedWords, setSelectedWords] = useState(selectWordsBySizes(groupedWords, sizes));
 
-    const [letterGrid,setLetterGrid] = useState(generateLetterGrid(grid, islands, selectedWords));
+    const [letterGrid, setLetterGrid] = useState(generateLetterGrid(grid, islands, selectedWords));
 
     //console.log("Generated Letter Grid:");
     //console.log(letterGrid.map(row => row.join(" ")).join("\n"));
@@ -69,10 +71,10 @@ Devvit.addCustomPostType({
     return (
       <vstack alignment='center middle' height='100%' gap='large'>
         <GridComponent grid={letterGrid} onCellClick={(i, j) => console.log(`Cell[${i}][${j}] clicked`)} />
-        <hstack>
-          <button icon="back" />
-          <IslandGridComponent gridSize={5} islandVertices={islands[4].vertices} />
-          <button icon="forward" />
+        <hstack gap='small'>
+          {/* <button icon="back" /> */}
+          {islands.map((island) => <IslandGridComponent gridSize={5} islandVertices={island.vertices} />)}
+          {/* <button icon="forward" /> */}
         </hstack>
       </vstack>
     );
