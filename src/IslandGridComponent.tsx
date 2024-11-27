@@ -25,22 +25,45 @@ function imageFromColors(startColor = '#4A90E2', endColor = '#003366') {
 export const IslandGridComponent = ({ gridSize, islandVertices }: IslandGridProps) => {
     const islandMap = new Set(islandVertices.map(([row, col]) => `${row},${col}`));
     const firstVertex = islandVertices[0];
+
+    // Determine the bounding box of the island
+    const minRow = Math.min(...islandVertices.map(([row]) => row));
+    const maxRow = Math.max(...islandVertices.map(([row]) => row));
+    const minCol = Math.min(...islandVertices.map(([, col]) => col));
+    const maxCol = Math.max(...islandVertices.map(([, col]) => col));
+
     return (
         <vstack>
-            {Array.from({ length: gridSize }).map((_, rowIndex) => (
+            {Array.from({ length: maxRow - minRow + 1 }).map((_, rowIndex) => (
                 <hstack>
-                    {Array.from({ length: gridSize }).map((_, colIndex) => {
-                        const isIslandCell = islandMap.has(`${rowIndex},${colIndex}`);
+                    {Array.from({ length: maxCol - minCol + 1 }).map((_, colIndex) => {
+                        const actualRow = rowIndex + minRow;
+                        const actualCol = colIndex + minCol;
+                        const isIslandCell = islandMap.has(`${actualRow},${actualCol}`);
                         return isIslandCell ? (
-                            <zstack backgroundColor="blue" width="16px" height="16px" alignment="middle center">
-                                <image imageHeight="16px" imageWidth="16px" width="16px" height='16px' url={`data:image/svg+xml,
-                                ${imageFromColors()}
-                                `} />
-                                {rowIndex === firstVertex[0] && colIndex === firstVertex[1] ? <icon name="conversion" size="xsmall" /> : ''}
+                            <zstack
+                                backgroundColor="blue"
+                                width="16px"
+                                height="16px"
+                                alignment="middle center"
+                            >
+                                <image
+                                    imageHeight="16px"
+                                    imageWidth="16px"
+                                    width="16px"
+                                    height="16px"
+                                    url={`data:image/svg+xml,
+                              ${imageFromColors()}
+                              `}
+                                />
+                                {actualRow === firstVertex[0] && actualCol === firstVertex[1] ? (
+                                    <icon name="conversion" size="xsmall" />
+                                ) : (
+                                    ''
+                                )}
                             </zstack>
                         ) : (
-                            <hstack width="16px" height="16px">
-                            </hstack>
+                            <hstack width="16px" height="16px"></hstack>
                         );
                     })}
                 </hstack>
