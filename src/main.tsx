@@ -2,7 +2,7 @@
 import { Devvit, useState } from '@devvit/public-api';
 import { GridComponent } from './GridComponent.js';
 import { IslandGridComponent } from './IslandGridComponent.js';
-import { generateGrid, analyzeGrid, generateLetterGrid, IslandData } from './BlockGenerationUtils.js';
+import { generateGrid, analyzeGrid, generateLetterGrid } from './BlockGenerationUtils.js';
 import { groupWordsByLength, selectWordsBySizes } from './WordGenerationUtils.js';
 
 Devvit.configure({
@@ -41,10 +41,10 @@ Devvit.addCustomPostType({
     const groupedWords = groupWordsByLength(["apple", "banana", "cherry", "date", "egg", "fig", "grape", "Desktop", "Toy", "Hen", "Paper", "Chair", "Bear", "Egg", "Cat", "Rat", "Chick"]);
 
     // Example usage: block generation
-    const [grid, setGrid] = useState(generateGrid(5));
+    const [grid, _setGrid] = useState(generateGrid(5));
     //console.log("Generated Grid:");
     //console.log(grid.map(row => row.join(' ')).join('\n'));
-    const [islands, setIslands] = useState(analyzeGrid(grid));
+    const [islands, _setIslands] = useState(analyzeGrid(grid));
     //console.log("\nIsland Data:");
     islands.forEach((island) => {
       console.log(`Island ${island.index}: Size = ${island.size}, Vertices = ${JSON.stringify(island.vertices)}`);
@@ -57,10 +57,10 @@ Devvit.addCustomPostType({
       console.log(`Length ${length}: ${words}`);
     }*/
 
-    const [sizes, setSizes] = useState(islands.map(i => i.size));
-    const [selectedWords, setSelectedWords] = useState(selectWordsBySizes(groupedWords, sizes));
+    const [sizes, _setSizes] = useState(islands.map(i => i.size));
+    const [selectedWords, _setSelectedWords] = useState(selectWordsBySizes(groupedWords, sizes));
 
-    const [letterGrid, setLetterGrid] = useState(generateLetterGrid(grid, islands, selectedWords));
+    const [letterGrid, _setLetterGrid] = useState(generateLetterGrid(grid, islands, selectedWords));
 
     //console.log("Generated Letter Grid:");
     //console.log(letterGrid.map(row => row.join(" ")).join("\n"));
