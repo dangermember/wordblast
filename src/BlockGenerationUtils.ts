@@ -93,7 +93,7 @@ export function analyzeGrid(grid: Grid): IslandData[] {
         const index = entry[0];
         const vertices = entry[1];
         const size = vertices.length;
-        const island = { index, size, vertices };
+        const island = { index, size, vertices } as IslandData;
         arrangeIslandVertices(island);
         islands.push(island)
     }
