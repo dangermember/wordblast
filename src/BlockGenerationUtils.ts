@@ -10,6 +10,129 @@ export interface IslandData extends JSONArray {
     vertices: Vertex[];
 }
 
+function getUnvisitedNeighbors(
+    row: number,
+    col: number,
+    n: number,
+    visited: Set<string>
+): Vertex[] {
+    const directions: Vertex[] = [
+        [0, 1],  // Right
+        [1, 0],  // Down
+        [0, -1], // Left
+        [-1, 0], // Up
+    ];
+
+    return directions
+        .map(([dr, dc]) => [row + dr, col + dc] as Vertex)
+        .filter(
+            ([nr, nc]) =>
+                nr >= 0 &&
+                nr < n &&
+                nc >= 0 &&
+                nc < n &&
+                !visited.has(`${nr},${nc}`)
+        );
+}
+
+function randomWalkContinuous(n: number): Vertex[] {
+    const path: Vertex[] = [];
+    const visited: Set<string> = new Set();
+
+    // Start at the top-left corner
+    const start: Vertex = [0, 0];
+    let current = start;
+
+    visited.add(`${current[0]},${current[1]}`);
+    path.push(current);
+
+    while (path.length < n * n) {
+        const neighbors = getUnvisitedNeighbors(current[0], current[1], n, visited);
+
+        if (neighbors.length === 0) {
+            // Backtrack if no neighbors are available
+            return []; // Return an empty array if the walk cannot complete
+        }
+
+        const next = neighbors[Math.floor(Math.random() * neighbors.length)];
+        visited.add(`${next[0]},${next[1]}`);
+        path.push(next);
+        current = next;
+    }
+
+    return path;
+}
+
+function generateGridPath(n: number): { grid: Grid, path: Vertex[] } {
+    let path: Vertex[] = [];
+    do {
+        path = randomWalkContinuous(n);
+    } while (path.length === 0); // Ensure a valid walk is generated
+
+    const grid: Grid = Array.from({ length: n }, () => Array(n).fill(-1));
+    path.forEach(([row, col], step) => {
+        grid[row][col] = step;
+    });
+
+    return { grid, path };
+}
+
+/**
+ * Splits a continuous path into steps and updates the grid with step indices.
+ * @param grid - The input grid with a continuous path (each cell has a unique order number).
+ * @param path - The continuous path as an array of [row, column] vertices.
+ * @param minSize - Minimum size of each segment.
+ * @param maxSize - Maximum size of each segment.
+ * @returns The updated grid with cells replaced by step indices.
+ */
+export function splitPathIntoSteps(
+    grid: Grid,
+    path: Vertex[],
+    minSize: number,
+    maxSize: number
+): Grid {
+    if (minSize < 3 || maxSize > path.length || minSize > maxSize) {
+        throw new Error("Invalid step size range");
+    }
+
+    const n = grid.length;
+    const stepGrid: Grid = Array.from({ length: n }, () => Array(n).fill(-1));
+
+    let currentIndex = 0; // Step index
+    let pathIndex = 0;    // Path traversal index
+
+    while (pathIndex < path.length) {
+        // Randomly determine the size of the next segment
+        const remaining = path.length - pathIndex;
+        const segmentSize = Math.min(
+            Math.floor(Math.random() * (maxSize - minSize + 1)) + minSize,
+            remaining
+        );
+
+        // Assign step index to the current segment
+        for (let i = 0; i < segmentSize; i++) {
+            const [row, col] = path[pathIndex];
+            stepGrid[row][col] = currentIndex;
+            pathIndex++;
+        }
+
+        currentIndex++; // Increment the step index
+    }
+
+    return stepGrid;
+}
+
+/**
+ * Generates an n x n grid with contiguous number islands, ensuring no island is smaller than 3 cells.
+ * @param n - Size of the grid (n x n)
+ * @returns Grid of numbers
+ */
+export function generateGridUsingRandomWalk(n: number, minSize = 3, maxSize = 7): Grid {
+    console.log(`Generating a grid of size ${n}`);
+    const { path, grid } = generateGridPath(n);
+    return splitPathIntoSteps(grid, path, minSize, maxSize);
+}
+
 /**
  * Rearranges the vertices of an island to form a contiguous path
  * with strictly horizontal and vertical moves (no diagonal moves).
