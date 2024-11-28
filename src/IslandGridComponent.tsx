@@ -57,7 +57,7 @@ export const IslandGridComponent = ({ gridSize, islandVertices }: IslandGridProp
                               `}
                                 />
                                 {actualRow === firstVertex[0] && actualCol === firstVertex[1] ? (
-                                    <icon name="conversion" size="xsmall" />
+                                    <icon name="conversion" size="xsmall" color="white"/>
                                 ) : (
                                     ''
                                 )}
