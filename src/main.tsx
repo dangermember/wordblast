@@ -1,10 +1,12 @@
 // Learn more at developers.reddit.com/docs
 import { Devvit, useState } from '@devvit/public-api';
-import { CellProps, GridComponent } from './GridComponent.js';
+import { GridComponent } from './GridComponent.js';
 import { IslandGridComponent } from './IslandGridComponent.js';
-import { generateGrid, analyzeGrid, generateLetterGrid, IslandData, GridToCells} from './BlockGenerationUtils.js';
+import { generateGrid, analyzeGrid, generateLetterGrid, GridToCells} from './BlockGenerationUtils.js';
 import { groupWordsByLength, selectWordsBySizes } from './WordGenerationUtils.js';
 import Settings from './settings.js';
+import { IslandData } from './Interfaces/IslandData.js';
+import CellProps from './Interfaces/CellProps.js';
 
 Devvit.configure({
   redditAPI: true,

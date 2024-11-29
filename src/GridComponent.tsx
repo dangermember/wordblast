@@ -1,5 +1,6 @@
-import { Devvit, JSONObject } from '@devvit/public-api';
+import { Devvit } from '@devvit/public-api';
 import Settings from './settings.js';
+import CellProps from './Interfaces/CellProps.js';
 
 interface GridProps {
     Cells: CellProps[][];
@@ -8,17 +9,6 @@ interface GridProps {
 interface GridCellProps {
     Cell: CellProps;
     onCellClick: (Cell: CellProps) => void;
-}
-
-export interface CellProps extends JSONObject {
-    letter: string;
-    x: number;
-    y: number;
-    startColor: string;
-    endColor: string;
-    startHighlightColor: string;
-    endHighlightColor: string;
-    solved: boolean
 }
 
 const GridCell = ({ Cell, onCellClick }: GridCellProps) => {

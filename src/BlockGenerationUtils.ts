@@ -1,16 +1,9 @@
-import { JSONArray } from "@devvit/public-api";
 import Settings from "./settings.js";
-import { CellProps } from "./GridComponent.js";
-
-export type Grid = number[][];
-export type LetterGrid = string[][];
-export type Vertex = number[];
-
-export interface IslandData extends JSONArray {
-    index: number;
-    size: number;
-    vertices: Vertex[];
-}
+import LetterGrid from "./Types/LetterGrid.js";
+import Vertex from "./Types/Vertex.js";
+import Grid from "./Types/Grid.js";
+import { IslandData } from "./Interfaces/IslandData.js";
+import CellProps from "./Interfaces/CellProps.js";
 
 export const GridToCells = (grid: LetterGrid): CellProps[][] => grid.map((row, rowIndex) => row.map((_, colIndex) => ({
     letter: grid[rowIndex][colIndex],
