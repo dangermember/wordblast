@@ -1,7 +1,8 @@
 const Settings = {
   GridSize: 5,
-  MainBackGround: "red",
+  GameBackGround: "red",
   GridBackGround: "yellow",
+  GameTextColor: "yellow",
   GridTextColor: "white",
   GridCellStartBackGroundColor: "#FF5733",
   GridCellEndBackGroundColor: "#FFC300",
