@@ -1,4 +1,6 @@
 import { JSONArray } from "@devvit/public-api";
+import Settings from "./settings.js";
+import { CellProps } from "./GridComponent.js";
 
 export type Grid = number[][];
 export type LetterGrid = string[][];
@@ -10,6 +12,17 @@ export interface IslandData extends JSONArray {
     vertices: Vertex[];
 }
 
+export const GridToCells = (grid: LetterGrid): CellProps[][] => grid.map((row, rowIndex) => row.map((_, colIndex) => ({
+    letter: grid[rowIndex][colIndex],
+    x: rowIndex,
+    y: colIndex,
+    startColor: Settings.GridCellStartBackGroundColor,
+    endColor: Settings.GridCellEndBackGroundColor,
+    startHighlightColor: Settings.GridCellHeighlightStartBackGroundColor,
+    endHighlightColor: Settings.GridCellHeighlightEndBackGroundColor,
+    solved: false
+  })))
+  
 function getUnvisitedNeighbors(
     row: number,
     col: number,

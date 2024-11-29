@@ -2,7 +2,7 @@
 import { Devvit, useState } from '@devvit/public-api';
 import { CellProps, GridComponent } from './GridComponent.js';
 import { IslandGridComponent } from './IslandGridComponent.js';
-import { generateGrid, analyzeGrid, generateLetterGrid, IslandData, LetterGrid } from './BlockGenerationUtils.js';
+import { generateGrid, analyzeGrid, generateLetterGrid, IslandData, GridToCells} from './BlockGenerationUtils.js';
 import { groupWordsByLength, selectWordsBySizes } from './WordGenerationUtils.js';
 import Settings from './settings.js';
 
@@ -39,16 +39,6 @@ Devvit.addCustomPostType({
   name: 'Experience Post',
   height: 'regular',
   render: (_context) => {
-    const GridToCells = (grid: LetterGrid): CellProps[][] => grid.map((row, rowIndex) => row.map((_, colIndex) => ({
-      letter: grid[rowIndex][colIndex],
-      x: rowIndex,
-      y: colIndex,
-      startColor: Settings.GridCellStartBackGroundColor,
-      endColor: Settings.GridCellEndBackGroundColor,
-      startHighlightColor: Settings.GridCellHeighlightStartBackGroundColor,
-      endHighlightColor: Settings.GridCellHeighlightEndBackGroundColor,
-      solved: false
-    })))
     const SetSolved = (cell: CellProps) => setCells((oldCells) => oldCells.map((row) => row.map((oldCell) => ({ ...oldCell, solved: oldCell.x == cell.x && oldCell.y == cell.y }))))
     const groupedWords = groupWordsByLength(["apple", "banana", "cherry", "date", "egg", "fig", "grape", "Desktop", "Toy", "Hen", "Paper", "Chair", "Bear", "Egg", "Cat", "Rat", "Chick"]);
     const [currentIsland, setCurrentIsland] = useState<IslandData | null>(null);
@@ -93,3 +83,4 @@ Devvit.addCustomPostType({
 });
 
 export default Devvit;
+
