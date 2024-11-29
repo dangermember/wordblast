@@ -1,6 +1,6 @@
 import { Devvit } from '@devvit/public-api';
-import { Vertex } from "./Helpers/BlockGenerationUtils.js";
 import Settings from './settings.js';
+import Vertex from './Types/Vertex.js';
 
 interface IslandGridProps {
     gridSize: number;

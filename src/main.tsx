@@ -3,7 +3,7 @@ import { Devvit, useState } from '@devvit/public-api';
 import { GridComponent } from './GridComponent.js';
 import { IslandGridComponent } from './IslandGridComponent.js';
 import { generateGrid, analyzeGrid, generateLetterGrid } from './Helpers/BlockGenerationUtils.js';
-import { groupWordsByLength, selectWordsBySizes } from './WordGenerationUtils.js';
+import { selectWordsBySizes } from './WordGenerationUtils.js';
 import Settings from './settings.js';
 import { IslandData } from './Interfaces/IslandData.js';
 import CellProps from './Interfaces/CellProps.js';
@@ -42,13 +42,12 @@ Devvit.addCustomPostType({
   name: 'WordBlast 0.0',
   height: 'tall',
   render: (_context) => {
-    const groupedWords = groupWordsByLength(["apple", "banana", "cherry", "date", "egg", "fig", "grape", "Desktop", "Toy", "Hen", "Paper", "Chair", "Bear", "Egg", "Cat", "Rat", "Chick"]);
     const [currentIsland, setCurrentIsland] = useState<IslandData | null>(null);
     // Example usage: block generation
     const [grid, setGrid] = useState(generateGrid(Settings.GridSize));
     const [islands, setIslands] = useState(analyzeGrid(grid));
     const [sizes, setSizes] = useState(islands.map(i => i.size));
-    const [selectedWords, setSelectedWords] = useState(selectWordsBySizes(groupedWords, sizes));
+    const [selectedWords, setSelectedWords] = useState(selectWordsBySizes(sizes));
     const [completedWordsCount, setCompletedWordsCount] = useState(0);
     const [letterGrid, setLetterGrid] = useState(generateLetterGrid(grid, islands, selectedWords));
     const [cells, setCells] = useState(GridToCells(letterGrid));
@@ -70,9 +69,8 @@ Devvit.addCustomPostType({
       newGrid = generateGrid(Settings.GridSize);
       newIslands = analyzeGrid(newGrid);
       newSizes = newIslands.map(i => i.size);
-      console.log("groupedWords",groupedWords)
       console.log("newSizes",newSizes)
-      newSelectedWords = selectWordsBySizes(groupedWords, newSizes);
+      newSelectedWords = selectWordsBySizes(newSizes);
       console.log("newSelectedWords",newSelectedWords)
       newLetterGrid = generateLetterGrid(newGrid, newIslands, newSelectedWords);
       newCells = GridToCells(newLetterGrid);
@@ -83,6 +81,7 @@ Devvit.addCustomPostType({
       setLetterGrid(newLetterGrid)
       setCells(newCells)
       setCompletedWordsCount(0)
+      setCurrentIsland(null)
     }
 
     //console.log("\nIsland Data:");
