@@ -1,7 +1,7 @@
-import LetterGrid from "./Types/LetterGrid.js";
-import Vertex from "./Types/Vertex.js";
-import Grid from "./Types/Grid.js";
-import { IslandData } from "./Interfaces/IslandData.js";
+import LetterGrid from "../Types/LetterGrid.js";
+import Vertex from "../Types/Vertex.js";
+import Grid from "../Types/Grid.js";
+import { IslandData } from "../Interfaces/IslandData.js";
 
 function getUnvisitedNeighbors(
     row: number,

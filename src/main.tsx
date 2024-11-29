@@ -2,7 +2,7 @@
 import { Devvit, useState } from '@devvit/public-api';
 import { GridComponent } from './GridComponent.js';
 import { IslandGridComponent } from './IslandGridComponent.js';
-import { generateGrid, analyzeGrid, generateLetterGrid} from './BlockGenerationUtils.js';
+import { generateGrid, analyzeGrid, generateLetterGrid} from './Helpers/BlockGenerationUtils.js';
 import { groupWordsByLength, selectWordsBySizes } from './WordGenerationUtils.js';
 import Settings from './settings.js';
 import { IslandData } from './Interfaces/IslandData.js';

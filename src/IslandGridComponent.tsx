@@ -1,5 +1,5 @@
 import { Devvit } from '@devvit/public-api';
-import { Vertex } from "./BlockGenerationUtils.js";
+import { Vertex } from "./Helpers/BlockGenerationUtils.js";
 import Settings from './settings.js';
 
 interface IslandGridProps {
