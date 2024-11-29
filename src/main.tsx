@@ -72,7 +72,7 @@ Devvit.addCustomPostType({
 
     return (
       <vstack alignment='center middle' height='100%' gap='large' backgroundColor={Settings.MainBackGround}>
-        <GridComponent grid={letterGrid} onCellClick={(i, j) => currentIsland?.vertices[0][0] == i && currentIsland?.vertices[0][1] == j} />
+        <GridComponent grid={letterGrid} onCellClick={(Cell) => currentIsland?.vertices[0][0] == Cell.x && currentIsland?.vertices[0][1] == Cell.y} />
         <hstack gap='small' backgroundColor={Settings.IslandsBackGround} padding="small">
           {/* <button icon="back" /> */}
           {islands.map((island) => <IslandGridComponent onClick={() => setCurrentIsland(island)} isHighlighted={currentIsland === island} gridSize={5} islandVertices={island.vertices} />)}
