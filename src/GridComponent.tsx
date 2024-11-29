@@ -33,7 +33,7 @@ const GridCell = ({ Cell, onCellClick }: GridCellProps) => {
 
 export const GridComponent = ({ Cells, onCellClick }: GridProps) => {
     return (
-        <vstack backgroundColor={Settings.GridBackGround} padding="small">
+        <vstack backgroundColor={Settings.GridBackGround}>
             {Cells && Cells.map((row) => (
                 <hstack>
                     {row.map((Cell) => (
