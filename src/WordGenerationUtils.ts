@@ -6,6 +6,7 @@
 */
 export function groupWordsByLength(words: string[]): Map<number, string[]> {
     const lengthMap = new Map<number, string[]>();
+    console.log("word in groupWordsByLength",words);
     for (const word of words) {
         const length = word.length;
  
@@ -19,7 +20,7 @@ export function groupWordsByLength(words: string[]): Map<number, string[]> {
         wordList.push(word);
         lengthMap.set(length, wordList);
     }
- 
+    console.log("lengthMap in groupWordsByLength",lengthMap);
     return lengthMap;
  }
  
