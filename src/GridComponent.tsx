@@ -1,51 +1,53 @@
-import { Devvit } from '@devvit/public-api';
-import { LetterGrid } from './BlockGenerationUtils.js';
+import { Devvit, JSONObject } from '@devvit/public-api';
 import Settings from './settings.js';
 
 interface GridProps {
-    grid: LetterGrid;
+    Cells: CellProps[][];
+    onCellClick: (Cell: CellProps) => void;
+}
+interface GridCellProps {
+    Cell: CellProps;
     onCellClick: (Cell: CellProps) => void;
 }
 
-interface CellProps {
+export interface CellProps extends JSONObject {
     letter: string;
-    x: number,
-    y: number
-    onClick: (Cell: CellProps) => void;
-    startColor?: string;
-    endColor?: string;
-    solved?: boolean
+    x: number;
+    y: number;
+    startColor: string;
+    endColor: string;
+    startHighlightColor: string;
+    endHighlightColor: string;
+    solved: boolean
 }
 
-const GridCell = (Cell: CellProps) => {
-    const startColor = Cell.startColor ? Cell.startColor : Settings.GridCellStartBackGroundColor;
-    const endColor = Cell.endColor ? Cell.endColor : Settings.GridCellEndBackGroundColor;
+const GridCell = ({ Cell, onCellClick }: GridCellProps) => {
     return <zstack alignment="center middle">
-        <image imageWidth={50} imageHeight={50} width="40px" height="40px" onPress={() => Cell.onClick(Cell)} url={`data:image/svg+xml,
+        <image imageWidth={50} imageHeight={50} width="40px" height="40px" onPress={() => onCellClick(Cell)} url={`data:image/svg+xml,
     <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 50 50">
     <!-- Gradient Definition -->
-    <defs>
-        <linearGradient id="blockGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" style="stop-color:${Cell.solved ? startColor : endColor};stop-opacity:1" />
-            <stop offset="100%" style="stop-color:${Cell.solved ? endColor : startColor};stop-opacity:1" />
-        </linearGradient>
-    </defs>
-    <!-- Square Block -->
-    <rect x="5" y="5" width="40" height="40" rx="5" ry="5" fill="url(#blockGradient)" stroke="#333" stroke-width="2" />
+        <defs>
+            <linearGradient id="blockGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:${Cell.solved ? Cell.startColor : Cell.startHighlightColor};stop-opacity:1" />
+                <stop offset="100%" style="stop-color:${Cell.solved ? Cell.endColor : Cell.endHighlightColor};stop-opacity:1" />
+            </linearGradient>
+        </defs>
+        <!-- Square Block -->
+        <rect x="5" y="5" width="40" height="40" rx="5" ry="5" fill="url(#blockGradient)" stroke="#333" stroke-width="2" />
+        <text x="50%" y="75%" dominant-baseline="auto" text-anchor="middle" font-size="35" fill="${Settings.GridTextColor}">${Cell.letter}</text>
     </svg>
     `}
         />
-        <text color="black" weight="bold">{Cell.letter}</text>
     </zstack>;
 }
 
-export const GridComponent = ({ grid, onCellClick }: GridProps) => {
+export const GridComponent = ({ Cells, onCellClick }: GridProps) => {
     return (
         <vstack backgroundColor={Settings.GridBackGround} padding="small">
-            {grid.map((row, rowIndex) => (
+            {Cells && Cells.map((row) => (
                 <hstack>
-                    {row.map((_, colIndex) => (
-                        <GridCell letter={grid[rowIndex][colIndex]} x={rowIndex} y={colIndex} onClick={(cell) => onCellClick(cell)} />
+                    {row.map((Cell) => (
+                        <GridCell Cell={Cell} onCellClick={onCellClick} />
                     ))}
                 </hstack>
             ))}
