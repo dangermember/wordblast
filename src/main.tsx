@@ -39,7 +39,7 @@ const connectVerticies = () => {
 };
 // Add a post type definition
 Devvit.addCustomPostType({
-  name: 'WordBlast 0.0',
+  name: 'WordBlast',
   height: 'tall',
   render: (_context) => {
     const [currentIsland, setCurrentIsland] = useState<IslandData | null>(null);
