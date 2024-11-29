@@ -1,5 +1,6 @@
 import { Devvit } from '@devvit/public-api';
 import { LetterGrid } from './BlockGenerationUtils.js';
+import Settings from './settings.js';
 
 interface GridProps {
     grid: LetterGrid;
@@ -15,7 +16,7 @@ interface CellProps {
     endColor?: string;
 }
 
-const GridCell = ({ letter, startColor = "#FF5733", endColor = "#FFC300", x, y, onClick }: CellProps) => {
+const GridCell = ({ letter, startColor = Settings.GridCellStartBackGroundColor, endColor = Settings.GridCellEndBackGroundColor, x, y, onClick }: CellProps) => {
     return <zstack alignment="center middle">
         <image imageWidth={50} imageHeight={50} width="40px" height="40px" onPress={() => onClick(x, y)} url={`data:image/svg+xml,
     <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 50 50">
@@ -27,8 +28,7 @@ const GridCell = ({ letter, startColor = "#FF5733", endColor = "#FFC300", x, y, 
         </linearGradient>
     </defs>
     <!-- Square Block -->
-    <rect x="5" y="5" width="40" height="40" rx="5" ry="5" fill="url(#blockGradient)" stroke="#333"
-        stroke-width="2" />
+    <rect x="5" y="5" width="40" height="40" rx="5" ry="5" fill="url(#blockGradient)" stroke="#333" stroke-width="2" />
     </svg>
     `}
         />
@@ -38,7 +38,7 @@ const GridCell = ({ letter, startColor = "#FF5733", endColor = "#FFC300", x, y, 
 
 export const GridComponent = ({ grid, onCellClick }: GridProps) => {
     return (
-        <vstack>
+        <vstack backgroundColor={Settings.GridBackGround} padding="small">
             {grid.map((row, rowIndex) => (
                 <hstack>
                     {row.map((_, colIndex) => (
