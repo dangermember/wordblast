@@ -10,6 +10,6 @@ const Settings = {
   GridCellHeighlightEndBackGroundColor: "#00C300",
   IslandsBackGround: "transparent",
   IslandBackGround: "transparent",
-  IslandHeighlightBackGround: "blue",
+  IslandHeighlightBackGround: "yellow",
 };
 export default Settings;
