@@ -2,7 +2,7 @@
 
 **Description:**
 
-This word game where you blast the words you find using the batterns at the bottom
+This is a word game where you blast the words you find using the batterns at the bottom
 
 **Getting Started:**
 
