@@ -1,9 +1,12 @@
 import { Devvit } from '@devvit/public-api';
 import { Vertex } from "./BlockGenerationUtils.js";
+import Settings from './settings.js';
 
 interface IslandGridProps {
     gridSize: number;
     islandVertices: Vertex[];
+    onClick:()=>void;
+    isHighlighted:boolean;
 }
 
 function imageFromColors(startColor = '#4A90E2', endColor = '#003366') {
@@ -22,7 +25,7 @@ function imageFromColors(startColor = '#4A90E2', endColor = '#003366') {
     `;
 };
 
-export const IslandGridComponent = ({ gridSize, islandVertices }: IslandGridProps) => {
+export const IslandGridComponent = ({ gridSize, isHighlighted: isHighlighted,islandVertices, onClick}: IslandGridProps) => {
     const islandMap = new Set(islandVertices.map(([row, col]) => `${row},${col}`));
     const firstVertex = islandVertices[0];
 
@@ -33,7 +36,7 @@ export const IslandGridComponent = ({ gridSize, islandVertices }: IslandGridProp
     const maxCol = Math.max(...islandVertices.map(([, col]) => col));
 
     return (
-        <vstack>
+        <vstack onPress={() => onClick()} backgroundColor={isHighlighted?Settings.IslandHeighlightBackGround:Settings.IslandBackGround}>
             {Array.from({ length: maxRow - minRow + 1 }).map((_, rowIndex) => (
                 <hstack>
                     {Array.from({ length: maxCol - minCol + 1 }).map((_, colIndex) => {
