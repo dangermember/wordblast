@@ -1,21 +1,8 @@
-import Settings from "./settings.js";
 import LetterGrid from "./Types/LetterGrid.js";
 import Vertex from "./Types/Vertex.js";
 import Grid from "./Types/Grid.js";
 import { IslandData } from "./Interfaces/IslandData.js";
-import CellProps from "./Interfaces/CellProps.js";
 
-export const GridToCells = (grid: LetterGrid): CellProps[][] => grid.map((row, rowIndex) => row.map((_, colIndex) => ({
-    letter: grid[rowIndex][colIndex],
-    x: rowIndex,
-    y: colIndex,
-    startColor: Settings.GridCellStartBackGroundColor,
-    endColor: Settings.GridCellEndBackGroundColor,
-    startHighlightColor: Settings.GridCellHeighlightStartBackGroundColor,
-    endHighlightColor: Settings.GridCellHeighlightEndBackGroundColor,
-    solved: false
-  })))
-  
 function getUnvisitedNeighbors(
     row: number,
     col: number,
