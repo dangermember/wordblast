@@ -2,10 +2,13 @@ const Settings = {
   GridSize: 5,
   MainBackGround: "red",
   GridBackGround: "yellow",
+  GridTextColor: "white",
   GridCellStartBackGroundColor: "#FF5733",
   GridCellEndBackGroundColor: "#FFC300",
-  IslandsBackGround: "yellow",
-  IslandBackGround: "grey",
+  GridCellHeighlightStartBackGroundColor: "#005733",
+  GridCellHeighlightEndBackGroundColor: "#00C300",
+  IslandsBackGround: "transparent",
+  IslandBackGround: "transparent",
   IslandHeighlightBackGround: "blue",
 };
 export default Settings;
