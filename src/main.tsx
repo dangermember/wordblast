@@ -2,8 +2,9 @@
 import { Devvit, useState } from '@devvit/public-api';
 import { GridComponent } from './GridComponent.js';
 import { IslandGridComponent } from './IslandGridComponent.js';
-import { generateGrid, analyzeGrid, generateLetterGrid } from './BlockGenerationUtils.js';
+import { generateGrid, analyzeGrid, generateLetterGrid, IslandData } from './BlockGenerationUtils.js';
 import { groupWordsByLength, selectWordsBySizes } from './WordGenerationUtils.js';
+import Settings from './settings.js';
 
 Devvit.configure({
   redditAPI: true,
@@ -30,7 +31,7 @@ Devvit.addMenuItem({
     ui.showToast({ text: 'Created post!' });
   },
 });
-const connectVerticies = ()=>{
+const connectVerticies = () => {
 
 };
 // Add a post type definition
@@ -41,7 +42,8 @@ Devvit.addCustomPostType({
     const groupedWords = groupWordsByLength(["apple", "banana", "cherry", "date", "egg", "fig", "grape", "Desktop", "Toy", "Hen", "Paper", "Chair", "Bear", "Egg", "Cat", "Rat", "Chick"]);
 
     // Example usage: block generation
-    const [grid, _setGrid] = useState(generateGrid(5));
+    const [currentIsland, setCurrentIsland] = useState<IslandData|null>(null);
+    const [grid, _setGrid] = useState(generateGrid(Settings.GridSize));
     //console.log("Generated Grid:");
     //console.log(grid.map(row => row.join(' ')).join('\n'));
     const [islands, _setIslands] = useState(analyzeGrid(grid));
@@ -69,11 +71,11 @@ Devvit.addCustomPostType({
     //console.log(JSON.stringify(islands));
 
     return (
-      <vstack alignment='center middle' height='100%' gap='large'>
-        <GridComponent grid={letterGrid} onCellClick={(i, j) => console.log(`Cell[${i}][${j}] clicked`)} />
-        <hstack gap='small'>
+      <vstack alignment='center middle' height='100%' gap='large' backgroundColor={Settings.MainBackGround}>
+        <GridComponent grid={letterGrid} onCellClick={(i, j) => currentIsland?.vertices[0][0] == i && currentIsland?.vertices[0][1] == j} />
+        <hstack gap='small' backgroundColor={Settings.IslandsBackGround} padding="small">
           {/* <button icon="back" /> */}
-          {islands.map((island) => <IslandGridComponent gridSize={5} islandVertices={island.vertices} />)}
+          {islands.map((island) => <IslandGridComponent onClick={() => setCurrentIsland(island)} isHighlighted={currentIsland === island} gridSize={5} islandVertices={island.vertices} />)}
           {/* <button icon="forward" /> */}
         </hstack>
       </vstack>
