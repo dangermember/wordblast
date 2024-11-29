@@ -128,7 +128,7 @@ export function splitPathIntoSteps(
  * @returns Grid of numbers
  */
 export function generateGridUsingRandomWalk(n: number, minSize = 3, maxSize = 7): Grid {
-    console.log(`Generating a grid of size ${n}`);
+    //console.log(`Generating a grid of size ${n}`);
     const { path, grid } = generateGridPath(n);
     return splitPathIntoSteps(grid, path, minSize, maxSize);
 }
@@ -232,7 +232,7 @@ export function analyzeGrid(grid: Grid): IslandData[] {
  * @returns Grid of numbers
  */
 export function generateGrid(n: number): Grid {
-    console.log(`Generating a grid of size ${n}`);
+    //console.log(`Generating a grid of size ${n}`);
     const grid: Grid = [
         [0, 0, 0, 0, 0],
         [1, 1, 1, 1, 0],
