@@ -2,7 +2,7 @@ import LetterGrid from "../Types/LetterGrid.js";
 import Vertex from "../Types/Vertex.js";
 import Grid from "../Types/Grid.js";
 import { IslandData } from "../Interfaces/IslandData.js";
-
+import grids from "../Data/grids.js";
 function getUnvisitedNeighbors(
     row: number,
     col: number,
@@ -123,6 +123,7 @@ export function splitPathIntoSteps(
 export function generateGridUsingRandomWalk(n: number, minSize = 3, maxSize = 7): Grid {
     //console.log(`Generating a grid of size ${n}`);
     const { path, grid } = generateGridPath(n);
+
     return splitPathIntoSteps(grid, path, minSize, maxSize);
 }
 
@@ -219,22 +220,19 @@ export function analyzeGrid(grid: Grid): IslandData[] {
     return islands;
 }
 
+function getRandomInt(min:number, max:number) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
 /**
  * Generates an n x n grid with contiguous number islands, ensuring no island is smaller than 3 cells.
  * @param n - Size of the grid (n x n)
  * @returns Grid of numbers
  */
 export function generateGrid(n: number): Grid {
-    //console.log(`Generating a grid of size ${n}`);
-    const grid: Grid = [
-        [0, 0, 0, 0, 0],
-        [1, 1, 1, 1, 0],
-        [2, 2, 3, 1, 0],
-        [4, 2, 3, 3, 5],
-        [4, 4, 4, 5, 5]
-    ];
-
-    return grid;
+    return grids[getRandomInt(0,grids.length)];
 }
 
 export function generateLetterGrid(grid: Grid, islandData: IslandData[], words: string[]): LetterGrid {
