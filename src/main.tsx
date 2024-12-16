@@ -63,16 +63,16 @@ Devvit.addCustomPostType({
         }
       }
     }
-    console.log("grid",JSON.stringify(grid));
+    //console.log("grid",JSON.stringify(grid));
     const resetGame = () => {
       let newGrid, newIslands, newSizes, newSelectedWords, newLetterGrid, newCells;
       newGrid = generateGrid(Settings.GridSize);
-      console.log("grid",JSON.stringify(grid));
+      //console.log("grid",JSON.stringify(grid));
       newIslands = analyzeGrid(newGrid);
       newSizes = newIslands.map(i => i.size);
-      console.log("newSizes",newSizes)
+      //console.log("newSizes",newSizes)
       newSelectedWords = selectWordsBySizes(newSizes);
-      console.log("newSelectedWords",newSelectedWords)
+      //console.log("newSelectedWords",newSelectedWords)
       newLetterGrid = generateLetterGrid(newGrid, newIslands, newSelectedWords);
       newCells = GridToCells(newLetterGrid);
       setGrid(newGrid)
@@ -94,7 +94,7 @@ Devvit.addCustomPostType({
     // Output the map
     //console.log("Grouped Words by Length:");
     /*for (const [length, words] of groupedWords.entries()) {
-      console.log(`Length ${length}: ${words}`);
+      //console.log(`Length ${length}: ${words}`);
     }*/
 
 
