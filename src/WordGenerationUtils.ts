@@ -1,3 +1,5 @@
+import Words from './Data/word.js'
+
 /**
  * Splits a list of words into a map where the key is the word length,
  * and the value is an array of words with that length.
@@ -32,25 +34,7 @@ export function groupWordsByLength(words: string[]): Map<number, string[]> {
  * @returns A list of selected words or an error if there are not enough words
  */
 export function selectWordsBySizes(sizes: number[]): string[] {
-  let lengthMap: Map<number, string[]> = groupWordsByLength([
-    "apple",
-    "banana",
-    "cherry",
-    "date",
-    "egg",
-    "fig",
-    "grape",
-    "Desktop",
-    "Toy",
-    "Hen",
-    "Paper",
-    "Chair",
-    "Bear",
-    "Egg",
-    "Cat",
-    "Rat",
-    "Chick",
-  ]);
+  let lengthMap: Map<number, string[]> = groupWordsByLength(Words);
   const selectedWords: string[] = [];
 
   for (const size of sizes) {
