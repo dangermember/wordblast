@@ -1519,4 +1519,10 @@ export default [
   "yield",
   "young",
   "youth",
+  "in",
+  "on",
+  "at",
+  "by",
+  "is",
+  "or"
 ];
