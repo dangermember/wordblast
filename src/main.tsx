@@ -17,7 +17,6 @@ Devvit.configure({
 Devvit.addMenuItem({
   label: 'Word Blast',
   location: 'subreddit',
-  forUserType: 'moderator',
   onPress: async (_event, context) => {
     const { reddit, ui } = context;
     const subreddit = await reddit.getCurrentSubreddit();
@@ -64,9 +63,11 @@ Devvit.addCustomPostType({
         }
       }
     }
+    console.log("grid",JSON.stringify(grid));
     const resetGame = () => {
       let newGrid, newIslands, newSizes, newSelectedWords, newLetterGrid, newCells;
       newGrid = generateGrid(Settings.GridSize);
+      console.log("grid",JSON.stringify(grid));
       newIslands = analyzeGrid(newGrid);
       newSizes = newIslands.map(i => i.size);
       console.log("newSizes",newSizes)
